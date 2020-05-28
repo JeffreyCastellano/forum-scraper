@@ -5,7 +5,7 @@ This is a vBulletin forum scraper using Scrapy.
 Pagination is handled for pages of different threads, and for pages of individual posts.
 Post, thread, and username information is collected in items and saved in a local MongoDB database via a pipeline.
 
-It should take about ~200 hours to scrape the 2.2M posts using AutoThrottle, or less if you're more aggressive (though you might get banned, depending on the forum).
+It should take about ~200 hours to scrape the 2.2M posts using AutoThrottle, or less if you're more aggressive (though you might get banned, depending on the forum). At 100 simultaneous connections and a scrapy benchmark of 3000 records a minute without posting to mongo and writing directly to JSON you should be finished in under 2 hours but this is not polite.
 
 Requires scrapy, pymongo, and a MongoDB server. Python 3 is not supported; tested on Python 2.7. on Mac OS X
 
