@@ -21,11 +21,11 @@ class PostItem(scrapy.Item):
     unique_fields = ['thread_id', 'post_no']
 
     thread_id = scrapy.Field()
-    user_id = scrapy.Field()
-    timestamp = scrapy.Field()
-    message = scrapy.Field()
-    quotes = scrapy.Field()
     post_no = scrapy.Field()
+    user_id = scrapy.Field()
+    #timestamp = scrapy.Field()
+    #quotes = scrapy.Field()
+    text = scrapy.Field()
     # post_no is shown on upper right of each post container.
 
 

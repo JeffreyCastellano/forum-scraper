@@ -16,11 +16,11 @@ SPIDER_MODULES = ['corescrape.spiders']
 NEWSPIDER_MODULE = 'corescrape.spiders'
 
 # Spider persistence
-JOBDIR = 'THD'
+JOBDIR = 'HomeDepot_02'
 
 # MongoDB settings
 MONGO_URI = 'mongodb://localhost:27017/'
-MONGO_DATABASE = 'THD'
+MONGO_DATABASE = 'HomeDepot_02'
 
 # fix annoying S3 error message bug
 DOWNLOAD_HANDLERS = {'s3': None, }

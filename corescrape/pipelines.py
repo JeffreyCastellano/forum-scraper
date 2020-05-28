@@ -70,12 +70,13 @@ class MongoPipeline(object):
 class JsonWriterPipeline(object):
 
     def open_spider(self, spider):
-        self.file = open('items.jl', 'w')
+        self.file = open('ContractorsTalk.jl', 'w')
 
     def close_spider(self, spider):
         self.file.close()
 
     def process_item(self, item, spider):
-        line = json.dumps(dict(item)) + "\n"
+        line = json.dumps(dict(item)) + ",\n"
         self.file.write(line)
         return item
+# print i/len(some_list)*100," percent complete         \r",

@@ -60,50 +60,51 @@ class CorescrapeSpider(scrapy.Spider):
 
         # Get info about thread
         # TODO: move this into parse_forum, b/c here the code runs every page of the thread
-        thread = ThreadItem()
+       # thread = ThreadItem()
 
         # print(response.url)
        # print(self.patterns['thread_id'])
         # thread['thread_id'] = to_int(re.findall(
        #     self.patterns['thread_id'], response.url)[0])
-        thread['thread_id'] = to_int(re.findall(
-            self.patterns['thread_id'], response.url)[0])
+       # thread['thread_id'] = to_int(re.findall(
+       #     self.patterns['thread_id'], response.url)[0])
         # print(thread['thread_id'])
-        thread['thread_name'] = response.xpath(
-            './/meta[@name="twitter:title"]/@content').extract_first()
-        thread['thread_path'] = response.xpath(
-            './/div/table//tr/td/table//tr/td[3]//a/text()').extract()
+       # thread['thread_name'] = response.xpath(
+       #     './/meta[@name="twitter:title"]/@content').extract_first()
+        # thread['thread_path'] = response.xpath(
+       #     './/div/table//tr/td/table//tr/td[3]//a/text()').extract()
 
         # Scrape all the posts on a page for post & user info
         for post in response.xpath("//table[contains(@id,'post')]"):
 
             p = PostItem()
-            p['thread_id'] = thread['thread_id']
+            p['thread_id'] = to_int(re.findall(
+                self.patterns['thread_id'], response.url)[0])
             p['user_id'] = to_int(post.xpath(
                 ".//a[@class='bigusername']/@href").re_first('-(\d+)'))
-            p['timestamp'] = post.xpath(
-                "string(.//tr/td/div[@class='normal'][2])").extract_first().strip()
-            p['quotes'] = post.xpath('.//blockquote/text()').extract()
+            # p['timestamp'] = post.xpath(
+            #    "string(.//tr/td/div[@class='normal'][2])").extract_first().strip()
+            #p['quotes'] = post.xpath('.//blockquote/text()').extract()
 
             # Message text, excluding blockquotes
             # Also excluding the <div> that has user "signatures"
             # (perhaps later on for NLP you'd want to insert a BLOCKQUOTE word-marker)
-            p['message'] = post.xpath(
+            p['text'] = post.xpath(
                 ".//*[contains(@id,'post_message_')]//text()[not(parent::blockquote)]").extract()
 
             p['post_no'] = to_int(post.xpath(
                 ".//tr/td[@class='thead'][2]/a//text()").extract_first())
 
             # user info
-            user = UserItem()
-            user['user_id'] = p['user_id']
-            user['user_name'] = post.xpath(
-                ".//a[@class='bigusername']//text()").extract_first()
+            #user = UserItem()
+            #user['user_id'] = p['user_id']
+            # user['user_name'] = post.xpath(
+            #   ".//a[@class='bigusername']//text()").extract_first()
 
             yield p
-            yield user
+            # yield user
 
-        yield thread
+        # yield thread
 
         # Pagination across thread: search for the link that the next button '>' points to, if any
         # next_page_request = self.paginate(next_page_callback=self.parse_posts)
